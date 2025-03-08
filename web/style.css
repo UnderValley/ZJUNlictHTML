@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.add-task {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.add-task input, .add-task select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 16px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-item.editing {
+    background: #fff3cd;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* 新增编辑模式样式 */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .edit-form input,
+  .edit-form select {
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .task-item.editing {
+    background: #fff9e6;
+    border: 2px solid #ffd700;
+  }
+  
+  /* 调整按钮间距 */
+  .task-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* 新增主题相关样式 */
+:root {
+    /* 默认暗色主题变量 */
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --container-bg: #2d2d2d;
+    --border-color: #404040;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --input-bg: #333333;
+    --input-border: #555555;
+}
+
+[data-theme="light"] {
+    /* 亮色主题变量 */
+    --bg-color: #f5f5f5;
+    --text-color: #333333;
+    --container-bg: #ffffff;
+    --border-color: #dddddd;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --input-bg: #ffffff;
+    --input-border: #cccccc;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    color: var(--text-color);
+}
+
+.container {
+    background-color: var(--container-bg);
+    border: 1px solid var(--border-color);
+}
+
+.add-task input,
+.add-task select,
+.edit-form input,
+.edit-form select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-color);
+}
+
+.task-item {
+    background-color: var(--container-bg);
+    border: 1px solid var(--border-color);
+}
+
+button {
+    background-color: var(--button-bg);
+    color: white;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+.delete-btn {
+    background-color: #ff4444 !important;
+}

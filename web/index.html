@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务看板 - LAN Task Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 新增主题切换按钮 -->
+    <button id="themeToggle" class="theme-toggle">🌞</button>
+    <div class="container">
+        <h1>任务看板</h1>
+        <div class="add-task">
+            <input type="text" id="taskName" placeholder="任务名称">
+            <input type="date" id="taskTime"> <!-- 修改为 date 类型 -->
+            <input type="text" id="taskLeader" placeholder="负责人">
+            <select id="taskProgress">
+                <option value="未开始">未开始</option>
+                <option value="进行中">进行中</option>
+                <option value="已完成">已完成</option>
+            </select>
+            <button onclick="addTask()">添加任务</button>
+        </div>
+        <div class="task-list" id="taskList"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
