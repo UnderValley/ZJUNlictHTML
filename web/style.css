@@ -1,3 +1,12 @@
+:root {
+    /* 原有变量... */
+    --border-color: #cccccc;
+}
+  
+[data-theme="dark"] {
+    --border-color: #444444;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -104,6 +113,8 @@ button:hover {
     --border-color: #404040;
     --button-bg: #4CAF50;
     --button-hover: #45a049;
+    --button-bg-b: #3781f8;
+    --button-hover-b: #2c68c9;
     --input-bg: #333333;
     --input-border: #555555;
 }
@@ -116,6 +127,8 @@ button:hover {
     --border-color: #dddddd;
     --button-bg: #4CAF50;
     --button-hover: #45a049;
+    --button-bg-b: #3781f8;
+    --button-hover-b: #2c68c9;
     --input-bg: #ffffff;
     --input-border: #cccccc;
 }
@@ -170,3 +183,391 @@ button:hover {
 .delete-btn {
     background-color: #ff4444 !important;
 }
+
+/* 自定义弹窗样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .modal-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .modal-buttons button {
+    padding: 8px 20px;
+  }
+
+  /* 新标题样式 */
+.header {
+    margin-bottom: 30px;
+}
+
+.main-title {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.main-title h1 {
+    font-size: 2.5em;
+    color: var(--accent-color);
+    margin: 0;
+}
+
+.title-underline {
+    width: 200px;
+    height: 3px;
+    background: var(--text-color);
+    margin: 5px 0;
+}
+
+.sub-title {
+    font-size: 1.8em;
+    color: var(--text-color);
+    margin: 10px 0;
+}
+
+/* 筛选栏 */
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* CSS修改：通过组合类实现样式复用 */
+/* 基础按钮样式 */
+/* .btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+} */
+
+/* 筛选按钮专属样式 */
+.filter-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    background: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    /* background: var(--button-bg); */
+}
+
+.filter-btn.active {
+    background: var(--accent-color);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* 添加按钮专属样式 */
+.add-task-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    background: var(--button-bg-b);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 15px;
+}
+
+.add-task-btn:hover {
+    background: var(--button-hover-b);
+    transform: translateY(-2px);
+}
+
+/* 右侧图标列 */
+.icon-columns {
+    position: sticky;
+    bottom: 0px;
+    display: flex;
+    gap: 30px;
+    right: 60px;
+    float: right;
+}
+
+.circle-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.circle-column div {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.blue div {
+    background: #2196F3;
+    box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
+}
+
+.yellow div {
+    background: #FFC107;
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+}
+
+/* 调整主内容区宽度 */
+.main-content {
+    position: relative;
+    width: calc(75% - 1px); /* 为隔离线留出空间 */
+    margin-right: calc(25% + 1px);
+  }
+  
+  .main-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1px;
+    height: 100%;
+    width: 1px;
+    background: var(--border-color); /* 使用主题变量 */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+.plus-icon {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+  /* 弹窗样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+  
+  .modal-content {
+    background: var(--container-bg);
+    padding: 25px;
+    border-radius: 10px;
+    width: 400px;
+    position: relative;
+    animation: modalSlide 0.3s ease-out;
+  }
+  
+  @keyframes modalSlide {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .modal-form input,
+  .modal-form select {
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+  }
+  
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .modal-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .modal-actions button:first-child {
+    background: var(--accent-color);
+    color: white;
+  }
+  
+  .modal-actions button:last-child {
+    background: var(--button-hover);
+    color: var(--text-color);
+  }
+
+  /* 在左右区域之间添加隔离线 */
+
+  
+  /* 或者使用独立的分隔线元素 */
+  /*
+  .divider-line {
+    position: fixed;
+    left: 75%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border-color);
+    z-index: 100;
+  }
+  */
+
+
+  .icon-popover {
+    position: fixed;
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    z-index: 1000;
+    animation: popoverFade 0.2s ease-out;
+    /* position: fixed;
+    transition: all 0.2s ease;
+    background: var(--container-bg); */
+  }
+  
+  /* 添加边界碰撞提示 */
+  .icon-popover::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--border-color);
+    display: none;
+  }
+  
+  .icon-popover.collide-right::after {
+    display: block;
+    right: auto;
+    left: -10px;
+    border-left: none;
+    border-right: 10px solid var(--border-color);
+  }
+/* 浮窗样式
+.icon-popover {
+    position: absolute;
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    z-index: 1000;
+    animation: popoverFade 0.2s ease-out;
+} */
+  
+  @keyframes popoverFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .popover-content {
+    padding: 15px;
+  }
+  
+  .popover-content h4 {
+    margin: 0 0 15px 0;
+    color: var(--accent-color);
+    font-size: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+  }
+  
+  .form-group select{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--text-color);
+  }
+  .form-group textarea {
+    width: 93%;
+    resize: none;
+    padding: 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--text-color);
+  }
+  
+  .popover-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .popover-actions button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-save {
+    background: var(--accent-color);
+    color: white;
+  }
+  
+  .btn-close {
+    background: var(--button-bg);
+    color: white;
+  }
+
+  /* .text-num {
+    background: #ffffff00;
+    position: relative;
+    left: 5px;
+  } */

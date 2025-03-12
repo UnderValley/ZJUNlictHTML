@@ -3,27 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>任务看板 - LAN Task Board</title>
+    <title>ZJUNlict 任务看板</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 新增主题切换按钮 -->
     <button id="themeToggle" class="theme-toggle">🌞</button>
-    <div class="container">
-        <h1>任务看板</h1>
-        <div class="add-task">
-            <input type="text" id="taskName" placeholder="任务名称">
-            <input type="date" id="taskTime"> <!-- 修改为 date 类型 -->
-            <input type="text" id="taskLeader" placeholder="负责人">
-            <select id="taskProgress">
-                <option value="未开始">未开始</option>
-                <option value="进行中">进行中</option>
-                <option value="已完成">已完成</option>
-            </select>
-            <button onclick="addTask()">添加任务</button>
+    
+    <!-- 左侧主内容区 -->
+    <div class="main-content">
+        <!-- 标题部分 -->
+        <div class="header">
+            <div class="main-title">
+                <h1>ZJUNlict</h1>
+                <div class="title-underline"></div>
+            </div>
+            <h2 class="sub-title">任务看板</h2>
         </div>
-        <div class="task-list" id="taskList"></div>
+
+        <!-- 筛选栏 -->
+        <div class="filter-bar">
+            
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="软件">软件</button>
+            <button class="filter-btn" data-category="电路">电路</button>
+            <button class="filter-btn" data-category="机械">机械</button>
+
+            <!-- 添加触发按钮 -->
+            <button class="add-task-btn" onclick="showAddTaskModal()">
+                <span class="plus-icon">+</span> 新建任务
+            </button>
+        </div>
+
+        <!-- 任务容器 -->
+        <div class="container">
+           
+            <div class="task-list" id="taskList"></div>
+        </div>
     </div>
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+        <p>确定要删除此任务吗？</p>
+        <div class="modal-buttons">
+            <button id="confirmDelete" style="background: #ff4444">确定</button>
+            <button id="cancelDelete">取消</button>
+        </div>
+        </div>
+    </div>
+    <!-- 右侧图标区 -->
+    <div class="icon-columns">
+        <div class="circle-column blue">
+            <!-- 蓝色圆形图标 0-15 -->
+        </div>
+        <div class="circle-column yellow">
+            <!-- 黄色圆形图标 0-15 -->
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <!-- 添加弹窗容器（放在 body 末尾） -->
+    <div id="addTaskModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeAddTaskModal()">&times;</span>
+        <h3>新建任务</h3>
+        <div class="modal-form">
+          <input type="text" id="modalTaskName" placeholder="任务名称" required>
+          <input type="date" id="modalTaskTime">
+          <input type="text" id="modalTaskLeader" placeholder="负责人">
+          <input type="text" id="modalTaskProgress" placeholder="任务进度">
+          <select id="modalTaskCategory">
+            <option value="软件">软件</option>
+            <option value="电路">电路</option>
+            <option value="机械">机械</option>
+          </select>
+          <div class="modal-actions">
+            <button onclick="submitTask()">确认添加</button>
+            <button onclick="closeAddTaskModal()">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 在 body 末尾添加浮窗模板 -->
+    <template id="popover-template">
+        <div class="icon-popover">
+        <div class="popover-content">
+            <h4>任务配置 - <span id="popover-title"></span></h4>
+            <div class="form-group">
+                <label>状态：</label>
+                <select id="popover-status">
+                    <option value="可用">可用</option>
+                    <option value="分档未测">分档未测</option>
+                    <option value="维修">维修</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>备注：</label>
+                <textarea id="popover-note" rows="3"></textarea>
+                </div>
+                <div class="popover-actions">
+                <button class="btn-save">保存</button>
+                <button class="btn-close">关闭</button>
+            </div>
+        </div>
+        </div>
+    </template>
 </body>
 </html>
