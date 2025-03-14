@@ -566,8 +566,18 @@ button:hover {
     color: white;
   }
 
-  /* .text-num {
-    background: #ffffff00;
+  .status-dot {
     position: relative;
-    left: 5px;
-  } */
+    bottom: -10px;
+    right: 17px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    /*border: 1px solid var(--container-bg);*/
+  }
+  
+  .status-dot[data-status="可用"] { background: #4CAF50;border: 1px solid var(--container-bg); }
+  .status-dot[data-status="分档未测"] { background: #FF9800; }
+  .status-dot[data-status="维修"] { background: #F44336; }
+  .status-dot[data-status="不存在"] { background: #424242; }

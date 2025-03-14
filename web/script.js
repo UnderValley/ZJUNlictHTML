@@ -3,8 +3,8 @@ const themeToggle = document.getElementById('themeToggle');
 let isDarkMode = true;
 let filterCategory = 'all';
 
-const API_TASK_URL = 'http://10.162.215.4:3000/api/tasks';
-const API_ROBOT_URL = 'http://10.162.215.4:3000/api/robot_status';
+const API_TASK_URL = 'http://10.12.225.190:12235/api/tasks';
+const API_ROBOT_URL = 'http://10.12.225.190:12235/api/robot_status';
 
 // 获取任务列表
 async function fetchTasks() {
@@ -302,7 +302,7 @@ function createCircles() {
       circle.addEventListener('mouseenter', showStatusTooltip);
       // circle.addEventListener('mouseleave', hideStatusTooltip);
       col.appendChild(circle);
-      updateStatusVisual(circle); // 初始状态更新
+      updateStatusVisual(circle, 0); // 初始状态更新
     });
   }
 }
@@ -389,6 +389,7 @@ const statusDotStyle = `
 .status-dot[data-status="可用"] { background: #4CAF50;border: 1px solid var(--container-bg); }
 .status-dot[data-status="分档未测"] { background: #FF9800; }
 .status-dot[data-status="维修"] { background: #F44336; }
+.status-dot[data-status="不存在"] { background: #424242; }
 `;
 const styleSheet = document.createElement('style');
 styleSheet.textContent = statusDotStyle;
@@ -454,7 +455,7 @@ async function saveRobotStatus(icon, color, number) {
       body: JSON.stringify({ color, number, status, note })
     });
     closeCurrentPopover();
-    updateStatusVisual(icon);
+    updateStatusVisual(icon, 1);
   } catch (error) {
     console.error('保存失败:', error);
     alert('数据保存失败，请检查控制台');
@@ -465,23 +466,51 @@ async function saveRobotStatus(icon, color, number) {
 async function initIcons() {
   const data = await fetchIconData();
   window.iconData = { blue: [], yellow: [] };
-  
+  window.countNum = { blue: {可用: 0, 分档未测: 0, 维修: 0, 不存在: 0}, yellow: {可用: 0, 分档未测: 0, 维修: 0, 不存在: 0} };
+
   data.forEach(item => {
     window.iconData[item.color][item.number] = {
       status: item.status,
       note: item.note
     };
+    window.countNum[item.color][item.status]++;
+    console.info(item.color+' '+window.countNum[item.color][item.status]+' '+item.number+item.status);
   });
 
   createCircles();
 }
 
 // 更新图标视觉状态
-async function updateStatusVisual(icon) {
+async function updateStatusVisual(icon, flag) {
   const color = icon.dataset.color;
   const id = icon.dataset.id;
   const status = window.iconData[color][id].status;
+  const note = window.iconData[color][id].note;
+  if (flag === 1) {
+    window.countNum[color][icon.querySelector('.status-dot').dataset.status]--;
+    window.countNum[color][status]++;
+  }
+  updateCountNum();
+
   icon.querySelector('.status-dot').dataset.status = status;
+
+  if (status === '不存在') {
+    icon.style.backgroundColor = '#424242';
+    icon.style.boxShadow = `0 0 0px ${'#FFFFFF00'}`;
+  } else {
+    icon.style.backgroundColor = color === 'blue' ? '#2196F3' : '#FFC107';
+    icon.style.boxShadow = `0 0 8px ${color === 'blue' ? '#2196f366' : '#ffc10766'}`;
+  }
+  icon.querySelector('.status-dot').dataset.note = note;
+}
+
+//
+function updateCountNum() {
+  const iconcol = document.querySelector('.icon-columns');
+  iconcol.children[0].children[1].textContent = `可用 蓝:${window.countNum['blue']['可用']} 黄:${window.countNum['yellow']['可用']}`;
+  iconcol.children[0].children[3].textContent = `分档未测 蓝:${window.countNum['blue']['分档未测']} 黄:${window.countNum['yellow']['分档未测']}`;
+  iconcol.children[0].children[5].textContent = `维修 蓝:${window.countNum['blue']['维修']} 黄:${window.countNum['yellow']['维修']}`;
+  
 }
 
 // 关闭浮窗相关函数
